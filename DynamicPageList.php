@@ -124,6 +124,7 @@ function renderDynamicPageList( $input, $args, $mwParser ) {
 
 	$suppressErrors = false;
 	$showNamespace = true;
+	$ignoreSubpages = false;
 	$addFirstCategoryDate = false;
 	$dateFormat = '';
 	$stripYear = false;
@@ -387,6 +388,13 @@ function renderDynamicPageList( $input, $args, $mwParser ) {
 					$showNamespace = true;
 				}
 				break;
+			case 'ignoresubpages':
+				if ( 'true' == $arg ) {
+					$ignoreSubpages = true;
+				} else {
+					$ignoreSubpages = false;
+				}
+				break;
 			case 'googlehack':
 				if ( 'false' == $arg ) {
 					$googleHack = false;
@@ -495,6 +503,10 @@ function renderDynamicPageList( $input, $args, $mwParser ) {
 		case 'exclude':
 			$where['page_is_redirect'] = 0;
 			break;
+	}
+
+	if ($ignoreSubpages) {
+		$where[] = "page_title NOT LIKE '%/%'";
 	}
 
 	$currentTableNumber = 1;
