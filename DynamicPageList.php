@@ -497,6 +497,8 @@ function renderDynamicPageList( $input, $args, $mwParser ) {
 			break;
 	}
 
+	$where[] = "page_title NOT LIKE '%/Review%'";
+
 	$currentTableNumber = 1;
 	$categorylinks = $dbr->tableName( 'categorylinks' );
 
